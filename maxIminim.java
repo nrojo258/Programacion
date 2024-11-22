@@ -1,16 +1,7 @@
-import java.util.Scanner;
-
 public class  maxIminim{
     public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
     int n = 8;
-    int[] numero = new int[n];
-
-    System.out.println("Ingresa " + n + " numeros:");
-    for(int i = 0; i < n; i++) {
-        System.out.println("Numero "+(i+1)+ ":");
-        numero[i] = scanner.nextInt();
-    }
+    int[] numero = {12,3,45,-3, 65,-5,88,99,2,23,54,33,27,53,96,0};
 
     int min = numero[0];
     int max = numero[0];
