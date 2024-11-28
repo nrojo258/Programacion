@@ -1,7 +1,10 @@
-public class  maxIminim{
+import java.util.Arrays;
+
+public class  ordenado{
     public static void main(String[] args) {
     int n = 8;
     int[] numero = {12,3,45,-3, 65,-5,88,99,2,23,54,33,27,53,96,0};
+    Arrays.sort(numero);
 
     int min = numero[0];
     int max = numero[0];
