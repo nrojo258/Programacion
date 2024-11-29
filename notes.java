@@ -2,7 +2,7 @@ import java.util.Scanner;
     
 public class notes {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner lector = new Scanner(System.in);
         double[] notes = new double[6];
         double resultat = 0;
         double nota = 0;  
