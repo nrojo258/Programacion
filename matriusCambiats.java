@@ -6,15 +6,6 @@ public class matriusCambiats {
 
         int [][] matriuParells = new int[4][19];
 
-        for(int i = 0; i < matriuParells.length; i++) {
-            for(int j = 0; j < matriuParells[i].length; j++) {
-                matriuParells[i][j] = i;
-                System.out.println("La posició " + i + " " + j + " de la matriu matriuParells val: " + matriuParells[i][j]);
-            }
-            System.out.println("La fila " + i + " de la matriu matriuParells ja està tota plena");
-            System.out.println();
-        }
-
         System.out.println();
         for(int i = 0; i < matriuParells.length; i++) {
             for(int j = 0; j < matriuParells[i].length; j++) {
