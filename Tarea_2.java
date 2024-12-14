@@ -5,10 +5,10 @@ public class Tarea_2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
-        System.out.println("Escriu un numero: ");
+        System.out.println("Escribe un numero: ");
         int numero = scanner.nextInt();
 
-        System.out.println("Es creara una matriu de 5 X "+ numero);
+        System.out.println("Se creara una matriu de 5 X "+ numero);
 
         int[] matrius = new int[5];
 
@@ -19,7 +19,7 @@ public class Tarea_2 {
             }
             System.out.println();
         }
-        System.out.println("S'ha creat una matriu de 5 X "+ numero);
+        System.out.println("Se ha creat una matriu de 5 X "+ numero);
 
     }
 }
