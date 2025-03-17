@@ -19,8 +19,8 @@ public class Habitacion extends Alojamiento{
     @Override
     public double calcularPrecio() {
         double precioBase = 50;
-        if (numCamas > 3) {
-            precioBase += (numCamas - 3) * 20;
+        if (numCamas > 2) {
+            precioBase += (numCamas - 2) * 20;
         }
         return precioBase;
     }
