@@ -16,6 +16,10 @@ public class Habitacion extends Alojamiento{
         this.numCamas = numCamas;
     }
 
+    public boolean cumpleCaracteristicas(int caracteristica) {
+        return true; 
+    }
+
     @Override
     public double calcularPrecio() {
         double precioBase = 50;

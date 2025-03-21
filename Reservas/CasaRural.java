@@ -27,6 +27,17 @@ public class CasaRural extends Alojamiento{
     }
 
     @Override
+    public boolean cumpleCaracteristicas(int caracteristica) {
+        if (caracteristica == 2) { 
+            return tieneJardin; 
+        } 
+        else if (caracteristica == 3) { 
+            return tienePiscina;
+        }
+        return true; 
+    }
+
+    @Override
     public double calcularPrecio() {
         double precio = 150;
         if (tienePiscina) {

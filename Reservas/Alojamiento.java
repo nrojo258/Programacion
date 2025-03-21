@@ -1,43 +1,51 @@
 package Reservas;
 
-public abstract class Alojamiento {
-    protected String nombre;
-    protected int capacidad;
-    protected boolean disponible;
+public class Alojamiento {
+    private String nombre;
+    private int capacidad;
+    private boolean disponible;
 
     public Alojamiento(String nombre, int capacidad) {
         this.nombre = nombre;
         this.capacidad = capacidad;
-        this.disponible = true;
+        this.disponible = true; 
     }
 
-    public String getNombre(){
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNom(String nombre){
+    public void setNom(String nombre) {
         this.nombre = nombre;
     }
 
-    public int getCapacidad(){
+    public int getCapacidad() {
         return capacidad;
     }
 
-    public void setCapacitat(int capacidad){
+    public void setCapacitat(int capacidad) {
         this.capacidad = capacidad;
     }
 
-    public boolean getDisponible(){
+    public boolean getDisponible() {
         return disponible;
     }
 
-    public void setDisponible(boolean disponible){
+    public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-    public abstract double calcularPrecio();
+
+    public boolean cumpleCaracteristicas(int caracteristica) {
+        return caracteristica <= capacidad;
+    }
+
+    public double calcularPrecio() {
+        return 0; 
+    }
 
     public String mostrarInformacion() {
-        return "Nombre: " + nombre + 
+        return "-------------------\n" +
+               "Nombre: " + nombre + 
                "\nCapacidad: " + capacidad + 
                "\nPrecio: " + calcularPrecio() +
                "\nDisponible: " + (disponible ? "Sí" : "No");
@@ -45,14 +53,14 @@ public abstract class Alojamiento {
 
     public boolean reservar() {
         if (disponible) {
-            disponible = false;
+            disponible = false; 
             return true;
         }
-        return false;
+        return false; 
     }
 
     public void liberar() {
-        disponible = true;
+        disponible = true; 
     }
 
     public boolean isDisponible() {

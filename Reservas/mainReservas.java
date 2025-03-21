@@ -1,6 +1,7 @@
 package Reservas;
 
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class mainReservas {
     public static void main(String[] args) {
@@ -48,7 +49,7 @@ public class mainReservas {
                     alojamientos[i] = new CasaRural(nombre, capacidad, tieneJardin, tienePiscina);
                     break;
                 default:
-                    System.out.println("Tipo no válido. Se asignará una habitación por defecto.");
+                    System.out.println("Alojamiento no válido.");
                     alojamientos[i] = new Habitacion(nombre, capacidad, 1);
                     break;
             }
@@ -75,42 +76,13 @@ public class mainReservas {
                     }
                     break;
                 case "2":
-                    System.out.print("Introduce el nombre del alojamiento a reservar: ");
-                    String nomReserva = sc.nextLine();
-                    boolean encontradoReserva = false;
-                    for (Alojamiento a : alojamientos) {
-                        if (a.getNombre().equalsIgnoreCase(nomReserva)) {
-                            encontradoReserva = true;
-                            if (a.reservar()) {
-                                System.out.println("Reservado correctamente.");
-                            } else {
-                                System.out.println("Ya está reservado.");
-                            }
-                            break;
-                        }
-                    }
-                    if (!encontradoReserva) {
-                        System.out.println("Alojamiento no encontrado.");
-                    }
+                    reservarAlojamiento(alojamientos, sc);
                     break;
                 case "3":
-                    System.out.print("Introduce el nombre del alojamiento a liberar: ");
-                    String nomLiberar = sc.nextLine();
-                    boolean encontradoLiberar = false;
-                    for (Alojamiento a : alojamientos) {
-                        if (a.getNombre().equalsIgnoreCase(nomLiberar)) {
-                            encontradoLiberar = true;
-                            a.liberar();
-                            System.out.println("Liberado correctamente.");
-                            break;
-                        }
-                    }
-                    if (!encontradoLiberar) {
-                        System.out.println("Alojamiento no encontrado.");
-                    }
+                    liberarAlojamiento(alojamientos, sc);
                     break;
                 case "4":
-                    buscarAlojamientosPersonalizados(alojamientos, sc);
+                    alojamientoPersonalizado(alojamientos, sc);
                     break;
                 case "5":
                     System.out.println("Saliendo del programa...");
@@ -122,7 +94,63 @@ public class mainReservas {
         sc.close();
     }
 
-    public static void buscarAlojamientosPersonalizados(Alojamiento[] alojamientos, Scanner sc) {
+    public static void reservarAlojamiento(Alojamiento[] alojamientos, Scanner sc) {
+        System.out.print("Introduce el nombre del alojamiento a reservar: ");
+        String nomReserva = sc.nextLine();
+        boolean encontradoReserva = false;
+        for (Alojamiento a : alojamientos) {
+            if (a.getNombre().equalsIgnoreCase(nomReserva)) {
+                encontradoReserva = true;
+                if (a.isDisponible()) {
+                    System.out.print("Introduce el número de personas: ");
+                    int numPersonas = sc.nextInt();
+                    System.out.print("Introduce el número de días: ");
+                    int numDias = sc.nextInt();
+                    sc.nextLine(); 
+
+                    if (numPersonas <= a.getCapacidad()) {
+                        double precioTotal = a.calcularPrecio() * numDias;
+                        System.out.println("El precio total por " + numDias + " días es: " + precioTotal);
+                        if (a.reservar()) {
+                            System.out.println("Reservado correctamente.");
+                        } 
+                        else {
+                            System.out.println("Ya está reservado.");
+                        }
+                    } 
+                    else {
+                        System.out.println("El número de personas excede la capacidad del alojamiento.");
+                    }
+                } 
+                else {
+                    System.out.println("El alojamiento no está disponible.");
+                }
+                break;
+            }
+        }
+        if (!encontradoReserva) {
+            System.out.println("Alojamiento no encontrado.");
+        }
+    }
+
+    public static void liberarAlojamiento(Alojamiento[] alojamientos, Scanner sc) {
+        System.out.print("Introduce el nombre del alojamiento a liberar: ");
+        String nomLiberar = sc.nextLine();
+        boolean encontradoLiberar = false;
+        for (Alojamiento a : alojamientos) {
+            if (a.getNombre().equalsIgnoreCase(nomLiberar)) {
+                encontradoLiberar = true;
+                a.liberar();
+                System.out.println("Liberado correctamente.");
+                break;
+            }
+        }
+        if (!encontradoLiberar) {
+            System.out.println("Alojamiento no encontrado.");
+        }
+    }
+
+    public static void alojamientoPersonalizado(Alojamiento[] alojamientos, Scanner sc) {
         System.out.print("Introduce el precio máximo que quieres por noche: ");
         double precioMaximo = sc.nextDouble();
         sc.nextLine(); 
@@ -130,39 +158,42 @@ public class mainReservas {
         System.out.println("¿Buscas características específicas? (1: Cocina, 2: Jardín, 3: Piscina, 0: Ninguna)");
         int caracteristica = sc.nextInt();
         sc.nextLine(); 
-
+    
+        System.out.println("¿Quieres ordenar por precio? (1: Sí, 0: No)");
+        boolean ordenarPorPrecio = sc.nextInt() == 1;
+        System.out.println("¿Ordenar de forma ascendente? (1: Sí, 0: No)");
+        boolean ascendente = sc.nextInt() == 1;
+        sc.nextLine(); 
+    
         for (Alojamiento a : alojamientos) {
-            if (a.isDisponible() && a.calcularPrecio() <= precioMaximo) {
-                boolean cumpleCaracteristicas = true;
-
-                switch (caracteristica) {
-                    case 1: 
-                        if (!(a instanceof Apartamento) || !((Apartamento) a).getTieneCocina()) {
-                            cumpleCaracteristicas = false;
-                        }
-                        break;
-                    case 2: 
-                        if (!(a instanceof CasaRural) || !((CasaRural) a).getTieneJardin()) {
-                            cumpleCaracteristicas = false;
-                        }
-                        break;
-                    case 3: 
-                        if (!(a instanceof CasaRural) || !((CasaRural) a).getTienePiscina()) {
-                            cumpleCaracteristicas = false;
-                        }
-                        break;
-                    case 0: 
-                        cumpleCaracteristicas = true;
-                        break;
-                    default:
-                        cumpleCaracteristicas = false; 
-                }
-
-                if (cumpleCaracteristicas) {
-                    System.out.println(a.mostrarInformacion());
-                    System.out.println("-------------------");
-                }
+            if (a.isDisponible() && a.calcularPrecio() <= precioMaximo && cumpleCaracteristicas(a, caracteristica)) {
+                System.out.println(a.mostrarInformacion());
+                System.out.println("-------------------");
             }
+        }
+    
+        if (ordenarPorPrecio) {
+            Arrays.sort(alojamientos, (a1, a2) -> {
+                if (ascendente) {
+                    return Double.compare(a1.calcularPrecio(), a2.calcularPrecio());
+                } else {
+                    return Double.compare(a2.calcularPrecio(), a1.calcularPrecio());
+                }
+            });
+        }
+    }
+    
+    private static boolean cumpleCaracteristicas(Alojamiento a, int caracteristica) {
+        switch (caracteristica) {
+            case 1: 
+                return a instanceof Apartamento && ((Apartamento) a).getTieneCocina();
+            case 2: 
+                return a instanceof CasaRural && ((CasaRural) a).getTieneJardin();
+            case 3: 
+                return a instanceof CasaRural && ((CasaRural) a).getTienePiscina();
+            case 0: 
+            default:
+                return true;
         }
     }
 }

@@ -27,6 +27,14 @@ public class Apartamento extends Alojamiento {
     }
 
     @Override
+    public boolean cumpleCaracteristicas(int caracteristica) {
+        if (caracteristica == 1) { 
+            return tieneCocina; 
+        }
+        return true; 
+    }
+
+    @Override
     public double calcularPrecio() {
         return 100 + (numHabitaciones * 10);
     }
