@@ -1,30 +1,24 @@
 package MasterMind;
 
-import java.util.Scanner;
+import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class CodeGenerator {
-    Feedback feedback = new Feedback();
-    Player player = new Player();
+    private static final String ALFABETO = "abcdefghijklmnopqrstuvwxyz";
+    private Random random = new Random();
 
-    public final static int LONG_SECRET = 3;
-    public final static String abc = "abcdefghijklmnopqrstuvwxyz";
-    public final static String ENCERTAT = "OOO";
-    public static String secret = "";
-    public static String resposta = "";
-
-    public String generarParaulaSecreta() {
-        String res = "";
-        for (int i = 0; i < LONG_SECRET; i++) {
-            res = res + generarLletraAleatoria();
+    public String generarCodigo(int longitud) {
+        ArrayList<Character> letrasDisponibles = new ArrayList<>();
+        for (char c : ALFABETO.toCharArray()) {
+            letrasDisponibles.add(c);
         }
-        return res;
-    }
+        Collections.shuffle(letrasDisponibles, random);  
 
-    public char generarLletraAleatoria() {
-        long nano = System.nanoTime();
-        int index = (int) (nano % abc.length());
-        return abc.charAt(index);
+        StringBuilder codigo = new StringBuilder();
+        for (int i = 0; i < longitud; i++) {
+            codigo.append(letrasDisponibles.get(i));  
+        }
+        return codigo.toString();
     }
-
-   
 }
