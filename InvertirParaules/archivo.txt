@@ -1,0 +1,2 @@
+Esto es un ejemplo de archivo de texto.
+Línias que seran invertidas.
